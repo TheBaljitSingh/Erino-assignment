@@ -1,0 +1,56 @@
+# --- Node ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# --- Environment Files ---
+.env
+.env.local
+.env.*.local
+
+# --- Logs ---
+logs
+*.log
+*.log.*
+/logs
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# --- Build Output ---
+dist/
+build/
+.cache/
+out/
+.next/
+coverage/
+.tmp/
+
+# --- Client (React/Vite/Next) ---
+client/node_modules/
+client/dist/
+client/build/
+client/.vite/
+client/.next/
+client/.nuxt/
+
+# --- Server ---
+server/node_modules/
+server/dist/
+server/build/
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Misc ---
+*.swp
+*.swo
