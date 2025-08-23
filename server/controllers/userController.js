@@ -37,8 +37,14 @@ export const login = async (req, res)=>{
 
 try {
         const { email, password:enteredPassword } = req.body;
+
+        
     
         const user = await User.findOne({email}).select("+password");
+
+        if(!user){
+          return res.status(401).json({message:"Invalide credentials"});
+        }
 
         const isMatched = await user.verifyPassword(enteredPassword); //have to user obj.
 
