@@ -64,7 +64,7 @@ try {
         res.cookie("token", token,{
             httpOnly:true,
             secure: process.env.NODE_ENV === "production", //in prod only
-            sameSite:"strict", //csrf
+            sameSite:"None", //csrf
             maxAge: 24 * 60 * 60 * 1000, // 1 day
         })
     
@@ -106,7 +106,8 @@ export const logout = async (req, res) => {
   try {
     return res.cookie('token', '', {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite:"None",
       maxAge: 0,
       path: '/'  
     }).status(200).json({ message: "Logged out successfully" });
