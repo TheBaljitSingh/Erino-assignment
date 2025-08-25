@@ -96,6 +96,7 @@ export default function Login() {
               </div>
 
               <div>
+                {loading && <p>first time it may take time to start backend</p>}
                 <button
                   type="submit"
                   disabled={loading}
