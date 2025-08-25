@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import crypto from "crypto"
 
 const userSchema = new mongoose.Schema(  {
     name: {
@@ -25,6 +26,14 @@ const userSchema = new mongoose.Schema(  {
       type: String,
       enum: ["user", "admin"],
       default: "user",
+    },
+    resetPasswordToken: {
+      type: String,
+      select:false
+    },
+    resetPasswordExpire: {
+      type:String,
+      select:false
     }
   },
   { timestamps: true }
@@ -39,6 +48,19 @@ userSchema.pre("save", async function(next){
 userSchema.methods.verifyPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+
+userSchema.methods.getResetToken = async function(){
+
+  const resetToken = crypto.randomBytes(20).toString("hex")
+
+  this.resetPasswordToken=crypto.createHash("sha256").update(resetToken).digest("hex");
+
+  this.resetPasswordExpire = Date.now()+15*60*1000 //15 min
+
+  //generate token send via mail
+
+  return resetToken;
+}
 
 
 const User =  mongoose.model("User", userSchema);
