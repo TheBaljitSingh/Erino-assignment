@@ -6,6 +6,9 @@ import { configDotenv } from "dotenv";
 import {insertLeads} from "./utils/script.js"
 configDotenv({path:".env"});
 import cors from "cors";
+import path from "path";
+const __dirname = path.resolve();
+
 
 const app = express();
 
@@ -27,7 +30,6 @@ connectDB();
 
 // insertLeads();
 
-
 import leadeRoutes from "./routes/leadRoutes.js";
 import userRoutes from "./routes/userRoute.js"
 
@@ -35,8 +37,9 @@ app.use("/api/v1", leadeRoutes);
 app.use("/api/v1", userRoutes);
 
 app.get("/", (req, res)=>{
-    res.send("its working right");
+  res.sendFile(path.join(__dirname, "index.html")); 
 })
+
 
 
 const PORT = process.env.PORT;
