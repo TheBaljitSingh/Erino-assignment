@@ -16,10 +16,13 @@ export const handleGoogleAuth = async (req, res)=>{
       email:req.user.email
     }, process.env.JWT_SECRET, {expiresIn:"7d"});
 
+  
+
     res.cookie("token",token,{
       httpOnly:true,
-      secure:true,
-      sameSite:"strict" //check it because server and client will be deployed on diff. origin
+      secure:process.env.NODE_ENV === "production", //in prod only,
+      sameSite:"None", //check it because server and client will be deployed on diff. origin
+      maxAge: 24 * 60 * 60 * 1000
     })
 
     //after receiving google auth token, redirecting to frontend url
