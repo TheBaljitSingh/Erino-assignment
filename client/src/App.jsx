@@ -11,6 +11,7 @@ import Profile from "./components/Profile";
 import NotFound from "./pages/NotFound";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AuthSuccess from "./components/AuthSuccess.jsx";
 
 export default function App() {
   return (
@@ -21,7 +22,7 @@ export default function App() {
             <Route path="/" element={<Home/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-
+            <Route path="/auth-success" element={<ProtectedRoute><AuthSuccess /></ProtectedRoute>} />
             <Route path="/leads" element={<ProtectedRoute><LeadsList /></ProtectedRoute>} />
             <Route path="/leads/new" element={<ProtectedRoute><LeadForm /></ProtectedRoute>} />
             <Route path="/leads/:id/edit" element={<ProtectedRoute><LeadForm /></ProtectedRoute>} />

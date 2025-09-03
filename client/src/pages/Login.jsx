@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -34,6 +35,15 @@ export default function Login() {
 
     setForm({email:"thebaljitsinghin@gmail.com", password:"11111111"});
   }
+
+  const handleLoginwithGoogle = async (e)=>{
+    e.preventDefault();
+    
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+
+  
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -114,9 +124,11 @@ export default function Login() {
                   )}
                   {loading ? "Signing in..." : "Sign in"}
                 </button>
+                <button onClick={handleLoginwithGoogle} className="flex justify-center w-full items-center my-4 bg-blue-500 p-2 rounded-md text-white">
+                  Login with Google
+                </button>
                   <div className="mt-3">
                   <p > Sign In with Test Credentials <span className="text-blue-500 hover:cursor-pointer" onClick={handleInsertCredentials}>Click here</span></p>
-
                   </div>
               </div>
             </form>

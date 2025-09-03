@@ -3,6 +3,36 @@ import jwt from "jsonwebtoken";
 import { sendEmail } from "../utils/sendMail.js";
 import crypto from "crypto"
 
+
+export const handleGoogleAuth = async (req, res)=>{
+  try {
+    // are you sure this functiono will only call when user really authenticated with the google???
+
+    //callback after user give concent and google will give me token here i have to verify it and proceed further
+
+
+    const token = jwt.sign({
+      id:req.user._id,
+      email:req.user.email
+    }, process.env.JWT_SECRET, {expiresIn:"7d"});
+
+    res.cookie("token",token,{
+      httpOnly:true,
+      secure:true,
+      sameSite:"strict" //check it because server and client will be deployed on diff. origin
+    })
+
+    //after receiving google auth token, redirecting to frontend url
+    res.redirect(`${process.env.FRONTEND_URL}/auth-success`);    
+    
+    
+  } catch (error) {
+    console.log("google login error",error);
+    res.redirect(`${process.env.FRONTEND_URL}/login?error=google_failed`)
+  }
+}
+
+
 export const forgetPassword  = async (req, res)=>{
   //take the email
   const {email} = req.body;
@@ -80,7 +110,7 @@ export const register = async(req, res)=>{
          name,
          email,
          password
-     });
+     }); 
  
      return res.status(201).json({
          message:"User registered  successfully",

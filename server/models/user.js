@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import crypto from "crypto"
 
-const userSchema = new mongoose.Schema(  {
+const userSchema = new mongoose.Schema({
     name: {
       type: String,
       required: [true, "Name is required"],
@@ -18,8 +18,6 @@ const userSchema = new mongoose.Schema(  {
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
-      minlength: 6,
       select: false, // hide password by default
     },
     role: {

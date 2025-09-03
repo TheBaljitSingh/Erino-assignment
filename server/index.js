@@ -8,12 +8,20 @@ configDotenv({path:".env"});
 import cors from "cors";
 import path from "path";
 const __dirname = path.resolve();
+import session from "express-session";
+import passport from "./config/passport.js";
 
 
 const app = express();
 
+
+console.log("jwt secret", process.env.JWT_SECRET);
+
+app.use(session({secret:process.env.JWT_SECRET})) //enabling the cookie support
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 const corsOptions = {
@@ -31,10 +39,10 @@ connectDB();
 // insertLeads();
 
 import leadeRoutes from "./routes/leadRoutes.js";
-import userRoutes from "./routes/userRoute.js"
+import authRoutes from "./routes/authRoute.js"
 
 app.use("/api/v1", leadeRoutes);
-app.use("/api/v1", userRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.get("/", (req, res)=>{
   res.sendFile(path.join(__dirname, "index.html")); 
